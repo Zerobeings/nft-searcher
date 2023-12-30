@@ -1,6 +1,6 @@
-# NFTSeacher
+# NFTSearcher
 
-NFTSeacher is a React component that provides a search bar for fetching and displaying NFTs from different networks. It uses the `nft-fetcher` library to fetch NFTs based on the user's search input.
+NFTSearcher is a React component that provides a search bar for fetching and displaying NFTs from different networks. It uses the `nft-fetcher` library to fetch NFTs based on the user's search input.
 
 ## Quick Start Method
 
@@ -26,13 +26,13 @@ yarn add react react-dom @thirdweb-dev/react
 
 ## Usage
 
-Create a component in your project and import the `NFTSeacher` component from the `nft-searcher` package.
+Create a component in your project and import the `NFTSearcher` component from the `nft-searcher` package.
 
 ```jsx
-import NFTSeacher from "nft-searcher"
+import NFTSearcher from "nft-searcher"
 import { useState, useEffect } from "react";
 
-export default function NFTSeacherPackNOSSR(){
+export default function NFTSearcherPackNOSSR(){
   const [fetchedNFTs, setFetchedNFTs] = useState<any[]>([]);
 
   const handleNFTsFetched = (nfts: any[]) => {
@@ -42,7 +42,7 @@ export default function NFTSeacherPackNOSSR(){
 
   return (
     <div>
-      <NFTSeacher 
+      <NFTSearcher 
         activeNetwork={"ethereum"}
         theme={"dark"}
         onNFTsFetched={handleNFTsFetched}
@@ -52,16 +52,16 @@ export default function NFTSeacherPackNOSSR(){
 }
 ```
 
-Next, dynamically import the `NFTSeacherPackNOSSR` component in your page.
+Next, dynamically import the `NFTSearcherPackNOSSR` component in your page.
 
 ```jsx
 import dynamic from "next/dynamic";
-const NFTSeacherPackNOSSR = dynamic(() => import('../components/NFTSeacher/Searcher'), { ssr: false });
+const NFTSearcherPackNOSSR = dynamic(() => import('../components/NFTSearcher/Searcher'), { ssr: false });
 
 export default function Home() {
   return (
     <div>
-      <NFTSeacherPackNOSSR />
+      <NFTSearcherPackNOSSR />
     </div>
   )
 }
@@ -84,12 +84,12 @@ export default function Home() {
 
 You can customize the appearance of the search bar by providing CSS styles and class names for various elements. The `style` prop is an object where the keys are the names of the elements and the values are CSS style objects. The `classNames` prop is similar, but the values are class names.
 
-Here's an example of how you can use the `style` and `classNames` props to customize the appearance of the NFTSeacher component:
+Here's an example of how you can use the `style` and `classNames` props to customize the appearance of the NFTSearcher component:
 
 ```jsx
-import NFTSeacher from 'nft-searcher';
+import NFTSearcher from 'nft-searcher';
 
-<NFTSeacher
+<NFTSearcher
   activeNetwork={"ethereum"}
   limit={10}
   start={0}
@@ -132,7 +132,7 @@ import NFTSeacher from 'nft-searcher';
 
 In this example, the `style` prop is used to provide CSS styles for the search container, search input, search button, results container, and result items. The `classNames` prop is used to provide custom class names for the same elements.
 
-Please note that the actual style and class names that you can use will depend on the implementation of the NFTSeacher component. The keys used in the `style` and `classNames` objects (like `searchContainer`, `searchInput`, etc.) are just examples and might not correspond to the actual elements in the NFTSeacher component. You'll need to refer to the NFTSeacher documentation or source code to find out the correct keys to use.
+Please note that the actual style and class names that you can use will depend on the implementation of the NFTSearcher component. The keys used in the `style` and `classNames` objects (like `searchContainer`, `searchInput`, etc.) are just examples and might not correspond to the actual elements in the NFTSearcher component. You'll need to refer to the NFTSearcher documentation or source code to find out the correct keys to use.
 
 
 ## Fetching NFTs

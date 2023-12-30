@@ -50,7 +50,7 @@ interface Collections {
     [key: string]: Collection[];
 }
 
-const NFTSeacher = ({
+const NFTSearcher = ({
     activeNetwork, 
     limit, 
     start, 
@@ -314,4 +314,4 @@ const NFTSeacher = ({
   );
 };
 
-export default NFTSeacher;
+export default NFTSearcher;
