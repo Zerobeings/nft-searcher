@@ -21,7 +21,7 @@ yarn add nft-searcher
 nft-searcher has three peer dependencies: `react`, `react-dom`, `@thirdweb-dev/react`. Make sure they are installed in your project.
 
 ```bash
-yarn add react react-dom
+yarn add react react-dom @thirdweb-dev/react
 ```
 
 ## Usage
@@ -93,6 +93,9 @@ import NFTSeacher from 'nft-searcher';
   activeNetwork={"ethereum"}
   limit={10}
   start={0}
+  where={[]} // for nft-indexer collections only, not used for thirdweb contract fetches
+  select={"*"} // for nft-indexer collections only, not used for thirdweb contract fetches
+  dbURL={""} // for nft-indexer collections only, not used for thirdweb contract fetches
   theme={"dark"} // or "light"
   onNFTsFetched={(nfts) => console.log(nfts)}
   style={{
