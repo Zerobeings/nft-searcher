@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "target": "es5",
+    "module": "es6",
+    "esModuleInterop": true,
+    "declaration": true,
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+  },
+  "include": [
+    "next-env.d.ts",
+    "./src/**/*",
+    "*.d.ts",
+    "*.tsx",
+    "*.ts"
+  ],
+    "exclude": ["node_modules"],
+    "peerDependencies": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "@thirdweb-dev/react": "^4.1.17"
+    }
+  }
