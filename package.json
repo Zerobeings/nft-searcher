@@ -1,6 +1,6 @@
 {
   "name": "nft-searcher",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "NFT searchbar for thirdweb & nft-fetcher",
   "license": "MIT",
   "main": "dist/nftsearcher.js",
@@ -21,7 +21,7 @@
     "@thirdweb-dev/react": "^4.1.17",
     "crypto-browserify": "^3.12.0",
     "multiformats": "^13.0.0",
-    "nft-fetcher": "^1.0.5",
+    "nft-fetcher": "^1.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "stream-browserify": "^3.0.0",
