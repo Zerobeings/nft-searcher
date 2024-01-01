@@ -81,12 +81,12 @@ const NFTSearcher = ({
     }}:SearchBarProps) => {
   const [contractAddress, setContractAddress] = useState<string>('');
   const [twContractAddress, setTWContractAddress] = useState<string>('');
-  const [network, setNetwork] = useState<string>('ethereum');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
   const [collections, setCollections] = useState<Collection[]>([]);
   const [collectionCache, setCollectionCache] = useState<Collections>({});
   const darkTheme = useMemo(() => theme === 'dark', [theme]);
+  const [lastUsedContractAddress, setLastUsedContractAddress] = useState<string>('');
   onNFTsFetched = onNFTsFetched || (() => {});
 
   const darkMode = useMemo(() => ({
@@ -117,12 +117,17 @@ const NFTSearcher = ({
     },
  }), [darkTheme, style]);
 
-    useEffect(() => {
-        if (activeNetwork) {
-            setNetwork(activeNetwork);
-        }
-    }
-    , [activeNetwork]);
+ const query = useMemo(() => ({
+    limit,
+    start,
+    where,
+    select,
+    dbURL,
+}), [limit, start, where, select, dbURL]);
+
+ const network = useMemo(() => {
+    return activeNetwork || 'ethereum';
+}, [activeNetwork]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const query = e.target.value;
@@ -135,26 +140,68 @@ const NFTSearcher = ({
         setShowSuggestions(false);
     };
 
+    // Check if contract is compatible with thirdWeb useNFTs hook
+    const [isTWCompatible, setisTWCompatible] = useState(false);
+    
     const { contract } = useContract(twContractAddress);
     const {data: nfts, isLoading: isLoading } = useNFTs(contract,{
         count: limit,
         start: start,
     });
-    const [isNFTsFetched, setIsNFTsFetched] = useState(false);
 
     useEffect(() => {
         if (nfts && nfts.length > 0) {
-            setIsNFTsFetched(true);
+            setisTWCompatible(true);
             onNFTsFetched(nfts);
+            setContractAddress('');
+            setShowSuggestions(false);
         }
-    }, [nfts]);
+    }, [nfts, onNFTsFetched, query]);
 
+    // new search based on parameter updates for non-tw compatible contracts
     useEffect(() => {
-        setIsNFTsFetched(false);
-    }, [contract]);
+        let isMounted = true;
+
+        if (lastUsedContractAddress && network && query && isMounted && !isTWCompatible) {
+            setIsProcessing(true);
+            setShowSuggestions(false);
+            console.log('Fetching NFTs...');
+            getMixtapeNFTs(lastUsedContractAddress, network, query)
+                .then((results:any) => {
+                    if (!isMounted) return;
+                    console.log('NFTs fetched!');
+                    if (onNFTsFetched) {
+                        onNFTsFetched(results);
+                    }
+                    setIsProcessing(false);
+                })
+                .catch((e:any) => {
+                    if (!isMounted) return;
+                    if (e instanceof Error) {
+                        console.error(`Error: ${e.message}`);
+                        console.log(`If collection is missing, submit an index request at https://indexer.locatia.app`);
+                    } else {
+                        console.error('Caught an unknown error:', e);
+                    }
+                    setIsProcessing(false);
+                }).finally(() => {
+                    if (!isMounted) return;
+                    setIsProcessing(false);
+                }
+            );
+        } 
+
+        return () => {
+            isMounted = false;
+        };
+    }, [lastUsedContractAddress, network, query, onNFTsFetched, isTWCompatible]);
 
     const handleSuggestionClick = (search: string) => {
-        if (!isNFTsFetched) {
+        setisTWCompatible(false)
+        console.log('Setting last used contract address...');
+        setLastUsedContractAddress(search);
+        setTWContractAddress(search || lastUsedContractAddress);
+        if (isTWCompatible) {
             console.log('Waiting for NFTs to be fetched...');
             return;
         }
@@ -230,22 +277,20 @@ const NFTSearcher = ({
         <div className={`${styles.searchBarContainer} ${classNames.searchBarContainer || ""}`} 
         style={style.searchBarContainer && darkMode ? darkMode.searchBarContainer : style.searchBarContainer}>
          {network === "ethereum" ? (
-                <img 
+                <MediaRenderer 
                     className={styles.networkImage}
                     src="https://lib.locatia.app/network-images/eth.png"
                     alt="ethereum"
-                    width={30} 
-                    height={30}
-                    loading="lazy"
+                    width={"30px"} 
+                    height={"30px"}
                 />
             ) : network === "polygon" && (
-                <img 
+                <MediaRenderer 
                     className={styles.networkImage}
                     src="https://lib.locatia.app/network-images/matic.png"
                     alt="polygon"
-                    width={30} 
-                    height={30}
-                    loading="lazy"
+                    width={"30px"} 
+                    height={"30px"}
                 />
             )    
             }
@@ -258,7 +303,6 @@ const NFTSearcher = ({
                 onChange={handleInputChange}
                 onKeyPress={event => {
                     if (event.key === 'Enter' && contractAddress) {
-                        setTWContractAddress(contractAddress);
                         handleSuggestionClick(contractAddress);
                         };
                     }}
@@ -292,7 +336,6 @@ const NFTSearcher = ({
                     className={`${styles.suggestion} ${classNames.suggestion || ""}`}
                     onClick={() => {
                         if (collection.contract){
-                        setTWContractAddress(collection.contract);
                         handleSuggestionClick(collection.contract);
                         }
                     }}
