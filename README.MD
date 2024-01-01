@@ -30,7 +30,7 @@ Create a component in your project and import the `NFTSearcher` component from t
 
 ```jsx
 import NFTSearcher from "nft-searcher"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export default function NFTSearcherPackNOSSR(){
   const [fetchedNFTs, setFetchedNFTs] = useState<any[]>([]);
