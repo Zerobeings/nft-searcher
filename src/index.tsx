@@ -249,13 +249,13 @@ const NFTSearcher = ({
                 let url;
                 switch (network) {
                     case "ethereum":
-                        url = "https://lib.locatia.app/eth-directory/directory.json";
+                        url = "https://lib.locatia.app/eth-directory/twdirectory.json";
                         break;
                     case "polygon":
-                        url = "https://lib.locatia.app/poly-directory/directory.json";
+                        url = "https://lib.locatia.app/poly-directory/twdirectory.json";
                         break;
                     default:
-                        url = "https://lib.locatia.app/eth-directory/directory.json";
+                        url = "https://lib.locatia.app/eth-directory/twdirectory.json";
                 }
         
                 const response = await fetch(url);
