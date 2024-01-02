@@ -153,19 +153,19 @@ const NFTSearcher = ({
         if (nfts && nfts.length > 0) {
             setisTWCompatible(true);
             onNFTsFetched(nfts);
-            setContractAddress('');
-            setShowSuggestions(false);
+        } else {
+            setisTWCompatible(false);
         }
-    }, [nfts, onNFTsFetched, query]);
+        setIsProcessing(false);
+        setShowSuggestions(false);
+    }, [nfts, onNFTsFetched]);
 
     // new search based on parameter updates for non-tw compatible contracts
     useEffect(() => {
         let isMounted = true;
 
         if (lastUsedContractAddress && network && query && isMounted && !isTWCompatible) {
-            setIsProcessing(true);
-            setShowSuggestions(false);
-            console.log('Fetching NFTs...');
+            console.log('Fetching NFTs from Locatia DB...');
             getMixtapeNFTs(lastUsedContractAddress, network, query)
                 .then((results:any) => {
                     if (!isMounted) return;
@@ -197,43 +197,12 @@ const NFTSearcher = ({
     }, [lastUsedContractAddress, network, query, onNFTsFetched, isTWCompatible]);
 
     const handleSuggestionClick = (search: string) => {
-        setisTWCompatible(false)
         console.log('Setting last used contract address...');
         setLastUsedContractAddress(search);
         setTWContractAddress(search || lastUsedContractAddress);
-        if (isTWCompatible) {
-            console.log('Waiting for NFTs to be fetched...');
-            return;
-        }
         setIsProcessing(true);
         setContractAddress('');
         setShowSuggestions(false);
-        console.log('Fetching NFTs...');
-        getMixtapeNFTs(search, network,
-                {
-                    limit,
-                    start,
-                    where,
-                    select,
-                    dbURL,
-                }
-            )
-            .then((results:any) => {
-                console.log('NFTs fetched!');
-                if (onNFTsFetched) {
-                    onNFTsFetched(results);
-                }
-                setIsProcessing(false);
-            })
-            .catch((e:any) => {
-                if (e instanceof Error) {
-                    console.error(`Error: ${e.message}`);
-                    console.log(`If collection is missing, submit an index request at https://indexer.locatia.app`);
-                } else {
-                    console.error('Caught an unknown error:', e);
-                }
-                setIsProcessing(false);
-            });
     };
     
     
@@ -253,6 +222,12 @@ const NFTSearcher = ({
                         break;
                     case "polygon":
                         url = "https://lib.locatia.app/poly-directory/twdirectory.json";
+                        break;
+                    case "fantom":
+                        url = "https://lib.locatia.app/ftm-directory/twdirectory.json";
+                        break;
+                    case "avalanche-fuji":
+                        url = "https://lib.locatia.app/avax-directory/twdirectory.json";
                         break;
                     default:
                         url = "https://lib.locatia.app/eth-directory/twdirectory.json";
@@ -276,7 +251,7 @@ const NFTSearcher = ({
     <div>
         <div className={`${styles.searchBarContainer} ${classNames.searchBarContainer || ""}`} 
         style={style.searchBarContainer && darkMode ? darkMode.searchBarContainer : style.searchBarContainer}>
-         {network === "ethereum" ? (
+            {network === "ethereum" ? (
                 <MediaRenderer 
                     className={styles.networkImage}
                     src="https://lib.locatia.app/network-images/eth.png"
@@ -284,7 +259,7 @@ const NFTSearcher = ({
                     width={"30px"} 
                     height={"30px"}
                 />
-            ) : network === "polygon" && (
+            ) : network === "polygon" ? (
                 <MediaRenderer 
                     className={styles.networkImage}
                     src="https://lib.locatia.app/network-images/matic.png"
@@ -292,11 +267,35 @@ const NFTSearcher = ({
                     width={"30px"} 
                     height={"30px"}
                 />
+            ) : network === "fantom" ? (
+                <MediaRenderer 
+                    className={styles.networkImage}
+                    src="https://lib.locatia.app/network-images/fantom.png"
+                    alt="fantom"
+                    width={"30px"} 
+                    height={"30px"}
+                />
+            ) : network === "avalanche-fuji" ? (
+                <MediaRenderer 
+                    className={styles.networkImage}
+                    src="https://lib.locatia.app/network-images/avalanche-fuji.svg"
+                    alt="avalanche"
+                    width={"30px"} 
+                    height={"30px"}
+                />
+            ) : (
+                <MediaRenderer 
+                    className={styles.networkImage}
+                    src="https://lib.locatia.app/network-images/eth.png"
+                    alt="ethereum"
+                    width={"30px"} 
+                    height={"30px"}
+                />
             )    
             }
             <input
                 style={style.searchBar && darkMode ? darkMode.searchBar : style.searchBar}
-                className={`${network === "ethereum" ? styles.searchBar : styles.searchBarMatic} ${styles.searchBar || ""}`}
+                className={`${styles.searchBar} ${styles.searchBar || ""}`}
                 type="text"
                 value={contractAddress}
                 placeholder="Name/Contract Address"

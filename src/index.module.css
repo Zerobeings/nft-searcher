@@ -32,20 +32,6 @@
     cursor: pointer;
 }
 
-.searchBarMatic {
-    height: 100%;
-    width: 100%;
-    flex: 1;
-    font-size: 20px;
-    border-radius: 12px;
-    background-color: transparent;
-    padding: 12px 20px 12px 10px;
-    align-items: center;
-    justify-self: center;
-    border: none;
-    cursor: pointer;
-}
-
 .clearButton {
     background: none;
     border: none;

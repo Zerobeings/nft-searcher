@@ -154,6 +154,13 @@ If you would like your thirdweb collection added to the directory, please open a
 
 The component supports multiple blockchain networks. The active network can be set using the `activeNetwork` prop. The default network is 'ethereum'.
 
+The following networks are supported:
+- Ethereum: "ethereum"
+- Polygon: "polygon"
+- Arbitrum One: "arbitrum"
+- Fantom Opera: "fantom"
+- Avalanche C Chain: "avalanche-fuji"
+
 ## Next js configuration
 
 Step 1: Update next.config.js
