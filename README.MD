@@ -159,7 +159,7 @@ The following networks are supported:
 - Polygon: "polygon"
 - Arbitrum One: "arbitrum"
 - Fantom Opera: "fantom"
-- Avalanche C Chain: "avalanche-fuji"
+- Avalanche: "avalanche"
 
 ## Next js configuration
 

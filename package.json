@@ -1,6 +1,6 @@
 {
   "name": "nft-searcher",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "NFT searchbar for thirdweb & nft-fetcher",
   "license": "MIT",
   "main": "dist/nftsearcher.js",

@@ -226,7 +226,7 @@ const NFTSearcher = ({
                     case "fantom":
                         url = "https://lib.locatia.app/ftm-directory/twdirectory.json";
                         break;
-                    case "avalanche-fuji":
+                    case "avalanche":
                         url = "https://lib.locatia.app/avax-directory/twdirectory.json";
                         break;
                     default:
@@ -275,7 +275,7 @@ const NFTSearcher = ({
                     width={"30px"} 
                     height={"30px"}
                 />
-            ) : network === "avalanche-fuji" ? (
+            ) : network === "avalanche" ? (
                 <MediaRenderer 
                     className={styles.networkImage}
                     src="https://lib.locatia.app/network-images/avalanche-fuji.svg"
