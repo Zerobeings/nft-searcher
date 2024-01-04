@@ -255,7 +255,7 @@ const NFTSearcher = ({
             {network === "ethereum" ? (
                 <MediaRenderer 
                     className={styles.networkImage}
-                    src="https://lib.locatia.app/network-images/eth.png"
+                    src="https://bafybeie3c5fcqjhrfma6wljpwzzldpsttu2lonutagoxwikeslersqzdwe.ipfs.dweb.link/eth.png"
                     alt="ethereum"
                     width={"30px"} 
                     height={"30px"}
@@ -263,7 +263,7 @@ const NFTSearcher = ({
             ) : network === "polygon" ? (
                 <MediaRenderer 
                     className={styles.networkImage}
-                    src="https://lib.locatia.app/network-images/matic.png"
+                    src="https://bafybeigzgztdmt3qdt52wuhyrrvpqp5qt4t2uja23wmfhsccqt332ek7da.ipfs.dweb.link/polygon/512.png"
                     alt="polygon"
                     width={"30px"} 
                     height={"30px"}
@@ -271,7 +271,7 @@ const NFTSearcher = ({
             ) : network === "fantom" ? (
                 <MediaRenderer 
                     className={styles.networkImage}
-                    src="https://lib.locatia.app/network-images/fantom.png"
+                    src="https://bafybeigzgztdmt3qdt52wuhyrrvpqp5qt4t2uja23wmfhsccqt332ek7da.ipfs.dweb.link/fantom/512.png"
                     alt="fantom"
                     width={"30px"} 
                     height={"30px"}
@@ -279,7 +279,7 @@ const NFTSearcher = ({
             ) : network === "avalanche" ? (
                 <MediaRenderer 
                     className={styles.networkImage}
-                    src="https://lib.locatia.app/network-images/avalanche-fuji.svg"
+                    src="https://bafybeigzgztdmt3qdt52wuhyrrvpqp5qt4t2uja23wmfhsccqt332ek7da.ipfs.dweb.link/avalanche/512.png"
                     alt="avalanche"
                     width={"30px"} 
                     height={"30px"}
@@ -287,7 +287,7 @@ const NFTSearcher = ({
             ) : (
                 <MediaRenderer 
                     className={styles.networkImage}
-                    src="https://lib.locatia.app/network-images/eth.png"
+                    src="https://bafybeie3c5fcqjhrfma6wljpwzzldpsttu2lonutagoxwikeslersqzdwe.ipfs.dweb.link/eth.png"
                     alt="ethereum"
                     width={"30px"} 
                     height={"30px"}
