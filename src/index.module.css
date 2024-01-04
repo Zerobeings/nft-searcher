@@ -1,3 +1,8 @@
+.searchContainer {
+    position: relative;
+    display: inline-block;
+}
+
 .searchBarContainer {
     display: flex;
     margin-left: auto;
@@ -47,8 +52,9 @@
 
 
 .suggestionsContainer {
-    position: relative;
-    top: 5px; 
+    position: absolute;
+    left: 0;
+    top: 68px; 
     justify-self: center;
     border-radius: 12px;
     width: 500px;

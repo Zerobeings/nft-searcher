@@ -249,7 +249,7 @@ const NFTSearcher = ({
 
     
   return (
-    <div>
+    <div className={styles.searchContainer}>
         <div className={`${styles.searchBarContainer} ${classNames.searchBarContainer || ""}`} 
         style={style.searchBarContainer && darkMode ? darkMode.searchBarContainer : style.searchBarContainer}>
             {network === "ethereum" ? (
