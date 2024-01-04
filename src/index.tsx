@@ -153,44 +153,45 @@ const NFTSearcher = ({
         if (nfts && nfts.length > 0) {
             setisTWCompatible(true);
             onNFTsFetched(nfts);
+            setIsProcessing(false);
         } else {
             setisTWCompatible(false);
         }
-        setIsProcessing(false);
         setShowSuggestions(false);
     }, [nfts, onNFTsFetched]);
 
     // new search based on parameter updates for non-tw compatible contracts
     useEffect(() => {
         let isMounted = true;
-
-        if (lastUsedContractAddress && network && query && isMounted && !isTWCompatible) {
-            console.log('Fetching NFTs from Locatia DB...');
-            getMixtapeNFTs(lastUsedContractAddress, network, query)
-                .then((results:any) => {
-                    if (!isMounted) return;
-                    console.log('NFTs fetched!');
-                    if (onNFTsFetched) {
-                        onNFTsFetched(results);
+        setTimeout(() => {
+            if (lastUsedContractAddress && network && query && isMounted && isTWCompatible === false) {
+                console.log('Fetching NFTs from Locatia DB...');
+                setIsProcessing(true);
+                getMixtapeNFTs(lastUsedContractAddress, network, query)
+                    .then((results:any) => {
+                        if (!isMounted) return;
+                        console.log('NFTs fetched!');
+                        if (onNFTsFetched) {
+                            onNFTsFetched(results);
+                        }
+                        setIsProcessing(false);
+                    })
+                    .catch((e:any) => {
+                        if (!isMounted) return;
+                        if (e instanceof Error) {
+                            console.error(`Error: ${e.message}`);
+                            console.log(`If collection is missing, submit an index request at https://indexer.locatia.app`);
+                        } else {
+                            console.error('Caught an unknown error:', e);
+                        }
+                        setIsProcessing(false);
+                    }).finally(() => {
+                        if (!isMounted) return;
+                        setIsProcessing(false);
                     }
-                    setIsProcessing(false);
-                })
-                .catch((e:any) => {
-                    if (!isMounted) return;
-                    if (e instanceof Error) {
-                        console.error(`Error: ${e.message}`);
-                        console.log(`If collection is missing, submit an index request at https://indexer.locatia.app`);
-                    } else {
-                        console.error('Caught an unknown error:', e);
-                    }
-                    setIsProcessing(false);
-                }).finally(() => {
-                    if (!isMounted) return;
-                    setIsProcessing(false);
-                }
-            );
-        } 
-
+                );
+            } 
+        }, 1000);
         return () => {
             isMounted = false;
         };
@@ -298,7 +299,7 @@ const NFTSearcher = ({
                 className={`${styles.searchBar} ${styles.searchBar || ""}`}
                 type="text"
                 value={contractAddress}
-                placeholder="Name/Contract Address"
+                placeholder={isProcessing ? "searching..." : "Name/Contract Address"}
                 onChange={handleInputChange}
                 onKeyPress={event => {
                     if (event.key === 'Enter' && contractAddress) {
