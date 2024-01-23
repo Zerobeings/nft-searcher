@@ -34,6 +34,7 @@ import { useState, useEffect, useCallback } from "react";
 
 export default function NFTSearcherPackNOSSR(){
   const [fetchedNFTs, setFetchedNFTs] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
     const handleNFTsFetched = useCallback((nfts: any[]) => {
     setLoading(true);
@@ -157,7 +158,6 @@ The component supports multiple blockchain networks. The active network can be s
 The following networks are supported:
 - Ethereum: "ethereum"
 - Polygon: "polygon"
-- Arbitrum One: "arbitrum"
 - Fantom Opera: "fantom"
 - Avalanche: "avalanche"
 
