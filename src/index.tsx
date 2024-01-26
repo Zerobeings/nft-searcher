@@ -230,6 +230,9 @@ const NFTSearcher = ({
                     case "avalanche":
                         url = "https://lib.locatia.app/avax-directory/twdirectory.json";
                         break;
+                    case "frame-testnet":
+                        url = "https://lib.locatia.app/frame-testnet/twdirectory.json";
+                    break;
                     default:
                         url = "https://lib.locatia.app/eth-directory/twdirectory.json";
                 }
@@ -284,6 +287,15 @@ const NFTSearcher = ({
                     width={"30px"} 
                     height={"30px"}
                 />
+             ) : network === "frame-testnet" ? (
+                    <MediaRenderer 
+                        className={styles.networkImage}
+                        src="https://5830d53ec6e6754ea216cead1b68e681.ipfscdn.io/ipfs/bafybeibvzodeiunfwwkffke35wcrgup2gcc6rn4izzt3u74xcstf74k3o4/"
+                        alt="frametestnet"
+                        width={"30px"} 
+                        height={"30px"}
+                        style={{borderRadius: "50%"}}
+                    />
             ) : (
                 <MediaRenderer 
                     className={styles.networkImage}

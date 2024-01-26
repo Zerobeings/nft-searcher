@@ -160,6 +160,7 @@ The following networks are supported:
 - Polygon: "polygon"
 - Fantom Opera: "fantom"
 - Avalanche: "avalanche"
+- Frame-Testnet: "frame-testnet"
 
 ## Next js configuration
 

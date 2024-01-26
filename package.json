@@ -1,6 +1,6 @@
 {
   "name": "nft-searcher",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "NFT searchbar for thirdweb & nft-fetcher",
   "license": "MIT",
   "main": "dist/nftsearcher.js",
@@ -31,6 +31,7 @@
     "@babel/cli": "^7.23.4",
     "@babel/core": "^7.23.6",
     "@babel/plugin-transform-class-properties": "^7.23.3",
+    "@babel/plugin-transform-runtime": "^7.23.9",
     "@babel/preset-env": "^7.23.6",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
